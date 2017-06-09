@@ -4,6 +4,17 @@
 #include "trem.h"
 #include <thread>
 #include <string>
+
+#include <cstdio>       //printf
+#include <cstring>      //memset
+#include <cstdlib>      //exit
+#include <netinet/in.h> //htons
+#include <arpa/inet.h>  //inet_addr
+#include <sys/socket.h> //socket
+#include <unistd.h>     //close
+#define MAXMSG 1024
+#define PORTNUM 4325
+
 int REGIAO2_7 = 1;
 int REGIAO2_4 = 1;
 int REGIAO6_7 = 1;
@@ -265,7 +276,294 @@ void MainWindow::updateTime() {
     ui->trem7medias->setText(s7.c_str());
 }
 void MainWindow::soc(){
+    //faz conexão e recebe uma msg
+    int play = 0;//true, false
+    int speed = 0;//0~9
+    int down = 0;
+    int up = 1; //train number 1~7
+    //variáveis do servidor
+    struct sockaddr_in endereco;
+       int socketId;
+       struct sockaddr_in enderecoCliente;
+       socklen_t tamanhoEnderecoCliente = sizeof(struct sockaddr);
+       int conexaoClienteId;
+       char *msg = new char[MAXMSG+1];
+       int byteslidos;
 
+       memset(&endereco, 0, sizeof(endereco));
+       endereco.sin_family = AF_INET;
+                   endereco.sin_port = htons(PORTNUM);
+                   endereco.sin_addr.s_addr = inet_addr("127.0.0.1");
+
+                   socketId = socket(AF_INET, SOCK_STREAM, 0);
+                   if (socketId == -1)
+                   {
+                       printf("Falha ao executar socket()\n");
+                       exit(EXIT_FAILURE);
+                   }
+                   int e = 1;
+                   if (setsockopt(socketId, SOL_SOCKET, SO_REUSEADDR, &e, sizeof(int)) < 0)
+                       printf("setsockopt(SO_REUSEADDR) failed");
+                   if ( bind (socketId, (struct sockaddr *)&endereco, sizeof(struct sockaddr)) == -1 )
+                   {
+                       printf("Falha ao executar bind()\n");
+                       exit(EXIT_FAILURE);
+                   }
+                   if ( listen( socketId, 10 ) == -1)
+                   {
+                       printf("Falha ao executar listen()\n");
+                       exit(EXIT_FAILURE);
+                   }
+                   //servidor ficar em um loop infinito
+
+
+
+                       printf("Servidor: esperando conexões clientes\n");
+
+                       //Servidor fica bloqueado esperando uma conexão do cliente
+                       conexaoClienteId = accept( socketId,(struct sockaddr *) &enderecoCliente,&tamanhoEnderecoCliente );
+
+                       printf("Servidor: recebeu conexão de %s\n", inet_ntoa(enderecoCliente.sin_addr));
+
+                       //Verificando erros
+                       if ( conexaoClienteId == -1)
+                       {
+                           printf("Falha ao executar accept()");
+                           exit(EXIT_FAILURE);
+                       }
+
+                       //receber uma msg do cliente
+                       printf("Servidor vai ficar esperando uma mensagem\n");
+                       byteslidos = recv(conexaoClienteId,msg,MAXMSG,0);
+
+                       if (byteslidos == -1)
+                       {
+                           printf("Falha ao executar recv()");
+                           exit(EXIT_FAILURE);
+                       }
+                       else if (byteslidos == 0)
+                       {
+                           printf("Cliente finalizou a conexão\n");
+                           exit(EXIT_SUCCESS);
+                       }
+
+                       //Inserir o caracter de fim de mensagem
+                       msg[byteslidos] = '\0';
+
+                       printf("Servidor recebeu a seguinte msg do cliente: %s \n",msg);
+
+                       play = ctoi(msg[0]);
+                       up = ctoi(msg[1]);
+                       down = ctoi(msg[2]);
+                       speed = ctoi(msg[3]);
+
+
+
+    if (up) {
+        int v = ui->spinBox->value() + 1;
+        ui->spinBox->setValue(v);
+    } else if (down) {
+        int v = ui->spinBox->value() - 1;
+        ui->spinBox->setValue(v);
+    } else if (play) {
+        switch(ui->spinBox->value()){
+            case 1:
+
+                break;
+            case 2:
+
+                break;
+            case 3:
+                trem1->setEnable(false);
+                trem2->setEnable(false);
+                trem3->setEnable(false);
+                trem4->setEnable(false);
+                trem5->setEnable(false);
+                trem6->setEnable(false);
+                trem7->setEnable(false);
+                break;
+            case 4:
+                trem1->setEnable(true);
+                trem2->setEnable(true);
+                trem3->setEnable(true);
+                trem4->setEnable(true);
+                trem5->setEnable(true);
+                trem6->setEnable(true);
+                trem7->setEnable(true);
+                break;
+            case 5:
+                ////faz conexão e recebe uma msg
+                printf("Servidor: esperando conexões clientes\n");
+
+                //Servidor fica bloqueado esperando uma conexão do cliente
+                conexaoClienteId = accept( socketId,(struct sockaddr *) &enderecoCliente,&tamanhoEnderecoCliente );
+
+                printf("Servidor: recebeu conexão de %s\n", inet_ntoa(enderecoCliente.sin_addr));
+
+                //Verificando erros
+                if ( conexaoClienteId == -1)
+                {
+                    printf("Falha ao executar accept()");
+                    exit(EXIT_FAILURE);
+                }
+
+                //receber uma msg do cliente
+                printf("Servidor vai ficar esperando uma mensagem\n");
+                byteslidos = recv(conexaoClienteId,msg,MAXMSG,0);
+
+                if (byteslidos == -1)
+                {
+                    printf("Falha ao executar recv()");
+                    exit(EXIT_FAILURE);
+                }
+                else if (byteslidos == 0)
+                {
+                    printf("Cliente finalizou a conexão\n");
+                    exit(EXIT_SUCCESS);
+                }
+
+                //Inserir o caracter de fim de mensagem
+                msg[byteslidos] = '\0';
+
+                printf("Servidor recebeu a seguinte msg do cliente: %s \n",msg);
+
+                play = ctoi(msg[0]);
+                up = ctoi(msg[1]);
+                down = ctoi(msg[2]);
+                speed = ctoi(msg[3]);
+
+                if (up) {
+                    int v = ui->spinBox_2->value() + 1;
+                    ui->spinBox_2->setValue(v);
+                } else if (down) {
+                    int v = ui->spinBox_2->value() - 1;
+                    ui->spinBox_2->setValue(v);
+                } else if (play) {
+                    switch(ui->spinBox_2->value()){
+                        case 1:
+                            trem1->setEnable(false);
+                            break;
+                        case 2:
+                            trem2->setEnable(false);
+                            break;
+                        case 3:
+                            trem3->setEnable(false);
+                            break;
+                        case 4:
+                            trem4->setEnable(false);
+                            break;
+                        case 5:
+                            trem5->setEnable(false);
+                            break;
+                        case 6:
+                            trem6->setEnable(false);
+                            break;
+                        case 7:
+                            trem7->setEnable(false);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                break;
+            case 6:
+                ////faz conexão e recebe uma msg
+                printf("Servidor: esperando conexões clientes\n");
+
+                //Servidor fica bloqueado esperando uma conexão do cliente
+                conexaoClienteId = accept( socketId,(struct sockaddr *) &enderecoCliente,&tamanhoEnderecoCliente );
+
+                printf("Servidor: recebeu conexão de %s\n", inet_ntoa(enderecoCliente.sin_addr));
+
+                //Verificando erros
+                if ( conexaoClienteId == -1)
+                {
+                    printf("Falha ao executar accept()");
+                    exit(EXIT_FAILURE);
+                }
+
+                //receber uma msg do cliente
+                printf("Servidor vai ficar esperando uma mensagem\n");
+                byteslidos = recv(conexaoClienteId,msg,MAXMSG,0);
+
+                if (byteslidos == -1)
+                {
+                    printf("Falha ao executar recv()");
+                    exit(EXIT_FAILURE);
+                }
+                else if (byteslidos == 0)
+                {
+                    printf("Cliente finalizou a conexão\n");
+                    exit(EXIT_SUCCESS);
+                }
+
+                //Inserir o caracter de fim de mensagem
+                msg[byteslidos] = '\0';
+
+                printf("Servidor recebeu a seguinte msg do cliente: %s \n",msg);
+
+                play = ctoi(msg[0]);
+                up = ctoi(msg[1]);
+                down = ctoi(msg[2]);
+                speed = ctoi(msg[3]);
+                if (up) {
+                    int v = ui->spinBox_2->value() + 1;
+                    ui->spinBox_2->setValue(v);
+                } else if (down) {
+                    int v = ui->spinBox_2->value() - 1;
+                    ui->spinBox_2->setValue(v);
+                } else if (play) {
+                    switch(ui->spinBox_2->value()){
+                        case 1:
+                            trem1->setEnable(true);
+                            break;
+                        case 2:
+                            trem2->setEnable(true);
+                            break;
+                        case 3:
+                            trem3->setEnable(true);
+                            break;
+                        case 4:
+                            trem4->setEnable(true);
+                            break;
+                        case 5:
+                            trem5->setEnable(true);
+                            break;
+                        case 6:
+                            trem6->setEnable(true);
+                            break;
+                        case 7:
+                            trem7->setEnable(true);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                break;
+            case 7:
+
+                break;
+            default:
+                break;
+        }
+    }
+
+}
+
+int MainWindow::ctoi(char c){
+    switch(c){
+
+        case '0': return 0;
+        case '1': return 1;
+        case '2': return 2;
+        case '3': return 3;
+        case '4': return 4;
+        case '5': return 5;
+        case '6': return 6;
+        case '7': return 7;
+        case '8': return 8;
+        default: return 9;
+    }
 
 }
 

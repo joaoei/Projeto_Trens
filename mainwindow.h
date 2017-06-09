@@ -22,6 +22,7 @@ public:
     void updateSem();
     void updateTime();
     void soc();
+    int ctoi(char c);
 public slots:
     void updateInterface(int,int,int);
 
