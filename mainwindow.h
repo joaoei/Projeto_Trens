@@ -1,8 +1,10 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "trem.h"
+#include "semaforo.h"
 #include <QMainWindow>
+#include "trem.h"
+
 #define VERTICAL 2
 using namespace std;
 
@@ -17,7 +19,6 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    void semaforo(Trem *t1,int posicao, int eixo, int a1, int a2, int *R);
 
 public slots:
     void updateInterface(int,int,int);
@@ -32,6 +33,7 @@ private:
     Trem *trem5;
     Trem *trem6;
     Trem *trem7;
+    Semaforo *sem2_7, *sem2_4, *sem5_6, *sem5_3, *sem1_3, *sem4_3, *sem1_4, *sem7_1, *sem1_6, *sem7_6;
 };
 
 #endif // MAINWINDOW_H

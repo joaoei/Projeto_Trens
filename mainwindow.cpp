@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "semaforo.h"
+#include "trem.h"
+
 int REGIAO2_7 = 1;
 int REGIAO2_4 = 1;
 int REGIAO6_7 = 1;
@@ -13,15 +15,13 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    trem1 = new Trem(1,230,200);
-    trem2 = new Trem(2,10,280);
-    trem3 = new Trem(3,520,350);
-    trem4 = new Trem(4,150,250);
-    trem5 = new Trem(5,690,170);
-    trem6 = new Trem(6,480,50);
-    trem7 = new Trem(7,230,50);
-
-    Semaforo *sem2_7, *sem2_4, *sem5_6, *sem5_3, *sem1_3, *sem4_3, *sem1_4, *sem7_1, *sem1_6, *sem7_6;
+    trem1 = new Trem(1,230,200, ui);
+    trem2 = new Trem(2,10,280, ui);
+    trem3 = new Trem(3,520,350, ui);
+    trem4 = new Trem(4,150,250, ui);
+    trem5 = new Trem(5,690,150, ui);
+    trem6 = new Trem(6,480,50, ui);
+    trem7 = new Trem(7,230,50, ui);
 
     sem2_7 = new Semaforo(1234,1,IPC_CREAT|0600);
     sem2_4 = new Semaforo(1235,1,IPC_CREAT|0600);
@@ -53,6 +53,16 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    sem1_3->~Semaforo();
+    sem1_4->~Semaforo();
+    sem1_6->~Semaforo();
+    sem2_4->~Semaforo();
+    sem2_7->~Semaforo();
+    sem4_3->~Semaforo();
+    sem5_3->~Semaforo();
+    sem5_6->~Semaforo();
+    sem7_1->~Semaforo();
+    sem7_6->~Semaforo();
     delete ui;
 }
 
@@ -85,23 +95,5 @@ void MainWindow::updateInterface(int id, int x, int y)
     }
 }
 
-/*
-void MainWindow::semaforo(Trem *t1,int posicao, int eixo, int a1, int a2, int *R)
-{
-    if(posicao == VERTICAL)
-    {
-           if(t1->getX()==eixo)//vai variar no Y
-            {
-                if((t1->getY()<a2) && (t1->getY()>a1))
-                {
-                    R++;
-                }
 
-            }
-
-    }else{
-
-    }
-
-} */
 

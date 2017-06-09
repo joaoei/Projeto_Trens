@@ -1,13 +1,15 @@
 #include "trem.h"
 #include "semaforo.h"
-
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
 #include <iostream>
 
-Trem::Trem(int id, int x, int y)
+Trem::Trem(int id, int x, int y, Ui::MainWindow *ui)
 {
     this->id = id;
     this->x = x;
     this->y = y;
+    this->ui = ui;
     velocidade = 50;
     enable = true;
 }
@@ -56,9 +58,14 @@ void Trem::run(Semaforo *sem1, Semaforo *sem2, Semaforo *sem3, Semaforo *sem4, S
                     if (y == 230) {
                         sem7->P();
                         sem5->P();
+                        ui->v_sem1->setStyleSheet("dsds");
+                        ui->v_sem7->setStyleSheet("background-color: red");
+                        ui->v_sem5->setStyleSheet("background-color: red");
                     } else if (y == 170) {
                         sem8->V();
                         sem9->V();
+                        ui->v_sem8->setStyleSheet("background-color: green");
+                        ui->v_sem9->setStyleSheet("background-color: green");
                     }
                     y+=10;
                 } else if (x > 230 && y == 250) {
@@ -67,9 +74,13 @@ void Trem::run(Semaforo *sem1, Semaforo *sem2, Semaforo *sem3, Semaforo *sem4, S
                     if (y == 230) {
                         sem5->V();
                         sem7->V();
+                        ui->v_sem5->setStyleSheet("background-color: green");
+                        ui->v_sem7->setStyleSheet("background-color: green");
                     } else if (y == 170) {
                         sem9->P();
                         sem8->P();
+                        ui->v_sem9->setStyleSheet("background-color: red");
+                        ui->v_sem8->setStyleSheet("background-color: red");
                     }
                     y-=10;
                 }
@@ -83,19 +94,23 @@ void Trem::run(Semaforo *sem1, Semaforo *sem2, Semaforo *sem3, Semaforo *sem4, S
                 if (y == 50 && x <120) {
                     if (x == 100) {
                         sem1->P();
+                        ui->v_sem1->setStyleSheet("background-color: red");
                     }
                     x+=10;
                 } else if (x == 120 && y < 350) {
                         //desce o eixo y
                         if (y == 160) {
                             sem1->V();
+                            ui->v_sem1->setStyleSheet("background-color: green");
                         } else if (y == 230) {
                             sem2->P();
+                            ui->v_sem2->setStyleSheet("background-color: red");
                         }
                         y+=10;
                 } else if (x > 10 && y == 350) {
                     if (x == 100) {
                         sem2->V();
+                        ui->v_sem2->setStyleSheet("background-color: green");
                     }
                     x-=10;
                 } else {
@@ -111,9 +126,12 @@ void Trem::run(Semaforo *sem1, Semaforo *sem2, Semaforo *sem3, Semaforo *sem4, S
                 if (y == 250 && x <580) {
                     if (x == 560) {
                         sem4->P();
+                        ui->v_sem4->setStyleSheet("background-color: red");
                     } else if (x == 480) {
                         sem6->V();
                         sem5->V();
+                        ui->v_sem6->setStyleSheet("background-color: green");
+                        ui->v_sem5->setStyleSheet("background-color: green");
                     }
                     x+=10;
                 } else if (x == 580 && y < 350) {
@@ -121,9 +139,12 @@ void Trem::run(Semaforo *sem1, Semaforo *sem2, Semaforo *sem3, Semaforo *sem4, S
                 } else if (x > 350 && y == 350) {
                     if (x == 560) {
                         sem4->V();
+                        ui->v_sem4->setStyleSheet("background-color: green");
                     } else if (x == 370) {
                         sem5->P();
                         sem6->P();
+                        ui->v_sem5->setStyleSheet("background-color: red");
+                        ui->v_sem6->setStyleSheet("background-color: red");
                     }
                     x-=10;
                 } else {
@@ -138,9 +159,12 @@ void Trem::run(Semaforo *sem1, Semaforo *sem2, Semaforo *sem3, Semaforo *sem4, S
                 if (y == 250 && x <350) {
                     if (x == 140) {
                         sem2->V();
+                        ui->v_sem2->setStyleSheet("background-color: green");
                     } else if (x == 210) {
                         sem6->P();
                         sem7->P();
+                        ui->v_sem6->setStyleSheet("background-color: red");
+                        ui->v_sem7->setStyleSheet("background-color: red");
                     }
                     x+=10;
                 } else if (x == 350 && y < 350) {
@@ -148,9 +172,12 @@ void Trem::run(Semaforo *sem1, Semaforo *sem2, Semaforo *sem3, Semaforo *sem4, S
                 } else if (x > 120 && y == 350) {
                     if (x == 140) {
                         sem2->P();
+                        ui->v_sem2->setStyleSheet("background-color: red");
                     } else if (x == 330) {
                         sem7->V();
                         sem6->V();
+                        ui->v_sem7->setStyleSheet("background-color: green");
+                        ui->v_sem6->setStyleSheet("background-color: green");
                     }
                     x-=10;
                 } else {
@@ -165,6 +192,7 @@ void Trem::run(Semaforo *sem1, Semaforo *sem2, Semaforo *sem3, Semaforo *sem4, S
                 if (y == 50 && x <690) {
                     if (x == 600) {
                         sem3->V();
+                        ui->v_sem3->setStyleSheet("background-color: green");
                     }
                     x+=10;
                 } else if (x == 690 && y < 350) {
@@ -172,13 +200,16 @@ void Trem::run(Semaforo *sem1, Semaforo *sem2, Semaforo *sem3, Semaforo *sem4, S
                 } else if (x > 580 && y == 350) {
                     if (x == 600) {
                         sem4->P();
+                        ui->v_sem4->setStyleSheet("background-color: red");
                     }
                     x-=10;
                 } else {
                     if (y == 170) {
                         sem3->P();
+                        ui->v_sem3->setStyleSheet("background-color: red");
                     } else if (y == 230) {
                         sem4->V();
+                        ui->v_sem4->setStyleSheet("background-color: green");
                     }
                     y-=10;
                 }

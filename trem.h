@@ -5,13 +5,15 @@
 #include <thread>
 #include <chrono>
 #include "semaforo.h"
+#include "ui_mainwindow.h"
+#include <QMainWindow>
 using namespace std;
 
 class Trem : public QObject
 {
     Q_OBJECT
 public:
-    Trem(int,int,int);
+    Trem(int,int,int, Ui::MainWindow*);
     ~Trem();
     void start(Semaforo *sem1, Semaforo *sem2, Semaforo *sem3, Semaforo *sem4, Semaforo *sem5, Semaforo *sem6, Semaforo *sem7, Semaforo *sem8, Semaforo *sem9, Semaforo *sem10);
     void run(Semaforo *sem1, Semaforo *sem2, Semaforo *sem3, Semaforo *sem4, Semaforo *sem5, Semaforo *sem6, Semaforo *sem7, Semaforo *sem8, Semaforo *sem9, Semaforo *sem10);
@@ -25,6 +27,7 @@ signals:
 
 private:
    std::thread threadTrem;
+   Ui::MainWindow *ui;
    int id;
    int x;
    int y;
