@@ -48,6 +48,7 @@ MainWindow::MainWindow(QWidget *parent) :
     trem5->start(sem2_7, sem2_4, sem5_6, sem5_3, sem1_3, sem4_3, sem1_4, sem7_1, sem1_6, sem7_6);
     trem6->start(sem2_7, sem2_4, sem5_6, sem5_3, sem1_3, sem4_3, sem1_4, sem7_1, sem1_6, sem7_6);
     trem7->start(sem2_7, sem2_4, sem5_6, sem5_3, sem1_3, sem4_3, sem1_4, sem7_1, sem1_6, sem7_6);
+    ui->spinBox->setValue(3);
 
 }
 
@@ -94,6 +95,7 @@ void MainWindow::updateInterface(int id, int x, int y)
             break;
     }
     updateSem();
+    updateTime();
 }
 
 void MainWindow::updateSem() {
@@ -239,6 +241,30 @@ void MainWindow::updateSem() {
         }
     }
 }
+
+void MainWindow::updateTime() {
+    std::string s = "Trem 1 - Média:  " + std::to_string(trem1->mean()) + " Desvio padrão: " + std::to_string(trem1->desvio()) + "  Ultima volta: " + std::to_string(trem1->getUltima()) ;
+    ui->trem1medias->setText(s.c_str());
+
+    std::string s2 = "Trem 2 - Média:  " + std::to_string(trem2->mean()) + " Desvio padrão: " + std::to_string(trem2->desvio()) + "  Ultima volta: " + std::to_string(trem2->getUltima()) ;
+    ui->trem2medias->setText(s2.c_str());
+
+    std::string s3 = "Trem 3 - Média:  " + std::to_string(trem3->mean()) + " Desvio padrão: " + std::to_string(trem3->desvio()) + "  Ultima volta: " + std::to_string(trem3->getUltima()) ;
+    ui->trem3medias->setText(s3.c_str());
+
+    std::string s4 = "Trem 4 - Média:  " + std::to_string(trem4->mean()) + " Desvio padrão: " + std::to_string(trem4->desvio()) + "  Ultima volta: " + std::to_string(trem4->getUltima()) ;
+    ui->trem4medias->setText(s4.c_str());
+
+    std::string s5 = "Trem 5 - Média:  " + std::to_string(trem5->mean()) + " Desvio padrão: " + std::to_string(trem5->desvio()) + "  Ultima volta: " + std::to_string(trem5->getUltima()) ;
+    ui->trem5medias->setText(s5.c_str());
+
+    std::string s6 = "Trem 6 - Média:  " + std::to_string(trem6->mean()) + " Desvio padrão: " + std::to_string(trem6->desvio()) + "  Ultima volta: " + std::to_string(trem6->getUltima()) ;
+    ui->trem6medias->setText(s6.c_str());
+
+    std::string s7 = "Trem 7 - Média:  " + std::to_string(trem7->mean()) + " Desvio padrão: " + std::to_string(trem7->desvio()) + "  Ultima volta: " + std::to_string(trem7->getUltima()) ;
+    ui->trem7medias->setText(s7.c_str());
+}
+
 
 
 

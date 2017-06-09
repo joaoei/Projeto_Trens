@@ -4,12 +4,15 @@
 #include "ui_mainwindow.h"
 #include <iostream>
 
+QTime timer_1, timer_2, timer_3, timer_4, timer_5, timer_6, timer_7;
+
 Trem::Trem(int id, int x, int y, Ui::MainWindow *ui)
 {
     this->id = id;
     this->x = x;
     this->y = y;
     this->ui = ui;
+    this->apontador = 0;
     velocidade = 150;
     enable = true;
 }
@@ -43,6 +46,37 @@ int Trem::getY()
     return this->y;
 }
 
+float Trem::mean()
+{   if ((media[0]==0)) return 0.0;
+    int i = 0;
+    float m = 0.0;
+    while((media[i]!=0) && (i<11)){
+        m +=media[i];
+        i++;
+    }
+    return (float)m/(float)i;
+}
+float Trem::desvio()
+{   int i = 0;
+    float m = mean();
+    if (m==0.0) return 0;
+    float dp = 0.0;
+    while((media[i]!=0) && (i<11)){
+        dp += pow(media[i]-m,2);
+        i++;
+    }
+    return (float)sqrt(dp/(float) i);
+}//desvio padrão
+void Trem::apontar()
+{
+    apontador++;
+    apontador = apontador%11;
+}
+int Trem::getUltima(){
+   if(apontador==0) return media[10];
+   return media[apontador-1];
+
+}
 
 void Trem::run(Semaforo *sem1, Semaforo *sem2, Semaforo *sem3, Semaforo *sem4, Semaforo *sem5, Semaforo *sem6, Semaforo *sem7, Semaforo *sem8, Semaforo *sem9, Semaforo *sem10)
 {
@@ -51,6 +85,10 @@ void Trem::run(Semaforo *sem1, Semaforo *sem2, Semaforo *sem3, Semaforo *sem4, S
         case 1:
             if (enable)
             {
+                if((x==230)&&(y==200)) {
+                    timer_1.start();
+                }
+
                 emit updateGUI(id,x,y);
                 if (y == 150 && x <460) {
                     x+=10;
@@ -75,11 +113,22 @@ void Trem::run(Semaforo *sem1, Semaforo *sem2, Semaforo *sem3, Semaforo *sem4, S
                     }
                     y-=10;
                 }
+                if((x==230)&&(y==200)){
+                    int nMilliseconds = timer_1.elapsed();
+                    if(nMilliseconds!=0){
+                        media[apontador] = nMilliseconds;
+                        apontar();
+                    }
+                 }
             }
             break;
         case 2:
             if (enable)
             {
+                if((x==10)&&(y==280)) {
+                    timer_2.start();
+                }
+
                 emit updateGUI(id,x,y);
                 //Vai para a direita no eixo x
                 if (y == 50 && x <120) {
@@ -104,11 +153,21 @@ void Trem::run(Semaforo *sem1, Semaforo *sem2, Semaforo *sem3, Semaforo *sem4, S
                     //sobe o eixo y
                     y-=10;
                 }
+                if((x==10)&&(y==280)){
+                    int nMilliseconds = timer_2.elapsed();
+                    if(nMilliseconds!=0){
+                        media[apontador] = nMilliseconds;
+                        apontar();
+                    }
+                 }
             }
             break;
         case 3:
             if (enable)
             {
+                if((x==520)&&(y==350)) {
+                    timer_3.start();
+                }
                 emit updateGUI(id,x,y);
                 if (y == 250 && x <580) {
                     if (x == 560) {
@@ -131,11 +190,21 @@ void Trem::run(Semaforo *sem1, Semaforo *sem2, Semaforo *sem3, Semaforo *sem4, S
                 } else {
                     y-=10;
                 }
+                if((x==520)&&(y==350)){
+                    int nMilliseconds = timer_3.elapsed();
+                    if(nMilliseconds!=0){
+                        media[apontador] = nMilliseconds;
+                        apontar();
+                    }
+                 }
             }
             break;
         case 4:
             if (enable)
             {
+                if((x==150)&&(y==250)) {
+                    timer_4.start();
+                }
                 emit updateGUI(id,x,y);
                 if (y == 250 && x <350) {
                     if (x == 140) {
@@ -158,11 +227,21 @@ void Trem::run(Semaforo *sem1, Semaforo *sem2, Semaforo *sem3, Semaforo *sem4, S
                 } else {
                     y-=10;
                 }
+                if((x==150)&&(y==250)){
+                    int nMilliseconds = timer_4.elapsed();
+                    if(nMilliseconds!=0){
+                        media[apontador] = nMilliseconds;
+                        apontar();
+                    }
+                 }
             }
             break;
         case 5:
             if (enable)
             {
+                if((x==690)&&(y==150)) {
+                    timer_5.start();
+                }
                 emit updateGUI(id,x,y);
                 if (y == 50 && x <690) {
                     if (x == 600) {
@@ -184,11 +263,21 @@ void Trem::run(Semaforo *sem1, Semaforo *sem2, Semaforo *sem3, Semaforo *sem4, S
                     }
                     y-=10;
                 }
+                if((x==690)&&(y==150)){
+                    int nMilliseconds = timer_5.elapsed();
+                    if(nMilliseconds!=0){
+                        media[apontador] = nMilliseconds;
+                        apontar();
+                    }
+                 }
             }
             break;
         case 6:
             if (enable)
             {
+                if((x==480)&&(y==50)) {
+                    timer_6.start();
+                }
                 emit updateGUI(id,x,y);
                 if (y == 50 && x <580) {
                     if (x == 560) {
@@ -211,11 +300,22 @@ void Trem::run(Semaforo *sem1, Semaforo *sem2, Semaforo *sem3, Semaforo *sem4, S
                 } else {
                     y-=10;
                 }
+                if((x==480)&&(y==50)){
+                    int nMilliseconds = timer_6.elapsed();
+                    if(nMilliseconds!=0){
+                        media[apontador] = nMilliseconds;
+                        apontar();
+                    }
+                 }
             }
             break;
         case 7:
             if (enable)
             {
+                if((x==230)&&(y==50)) {
+                    timer_7.start();
+                }
+
                 emit updateGUI(id,x,y);
                 if (y == 50 && x <350) {
                     if (x == 140) {
@@ -238,6 +338,13 @@ void Trem::run(Semaforo *sem1, Semaforo *sem2, Semaforo *sem3, Semaforo *sem4, S
                 } else {
                     y-=10;
                 }
+                if((x==230)&&(y==50)){
+                    int nMilliseconds = timer_7.elapsed();
+                    if(nMilliseconds!=0){
+                        media[apontador] = nMilliseconds;
+                        apontar();
+                    }
+                 }
             }
             break;
         default:
