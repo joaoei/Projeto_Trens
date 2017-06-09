@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "semaforo.h"
 #include "trem.h"
+#include <thread>
 #include <string>
 int REGIAO2_7 = 1;
 int REGIAO2_4 = 1;
@@ -48,8 +49,7 @@ MainWindow::MainWindow(QWidget *parent) :
     trem5->start(sem2_7, sem2_4, sem5_6, sem5_3, sem1_3, sem4_3, sem1_4, sem7_1, sem1_6, sem7_6);
     trem6->start(sem2_7, sem2_4, sem5_6, sem5_3, sem1_3, sem4_3, sem1_4, sem7_1, sem1_6, sem7_6);
     trem7->start(sem2_7, sem2_4, sem5_6, sem5_3, sem1_3, sem4_3, sem1_4, sem7_1, sem1_6, sem7_6);
-    ui->spinBox->setValue(3);
-
+    s = std::thread(&MainWindow::soc, this);
 }
 
 MainWindow::~MainWindow()
@@ -264,7 +264,10 @@ void MainWindow::updateTime() {
     std::string s7 = "Trem 7 - Média:  " + std::to_string(trem7->mean()) + " Desvio padrão: " + std::to_string(trem7->desvio()) + "  Ultima volta: " + std::to_string(trem7->getUltima()) ;
     ui->trem7medias->setText(s7.c_str());
 }
+void MainWindow::soc(){
 
+
+}
 
 
 

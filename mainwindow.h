@@ -21,7 +21,7 @@ public:
     ~MainWindow();
     void updateSem();
     void updateTime();
-
+    void soc();
 public slots:
     void updateInterface(int,int,int);
 
@@ -35,6 +35,7 @@ private:
     Trem *trem5;
     Trem *trem6;
     Trem *trem7;
+    std::thread s;
     Semaforo *sem2_7, *sem2_4, *sem5_6, *sem5_3, *sem1_3, *sem4_3, *sem1_4, *sem7_1, *sem1_6, *sem7_6;
 };
 
