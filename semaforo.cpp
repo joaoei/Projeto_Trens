@@ -22,6 +22,7 @@ Semaforo::Semaforo(key_t key, int valorInicial, int flags){
 
   //Atualizando o contador do semaforo atraves do comando SETVAL
   semctl(semaforoId,0,SETVAL,arg);
+  tremId = 0;
 }
 
 /*Destrutor
@@ -36,7 +37,8 @@ Função utilizada para entrada na região critica.
 Decrementa o contador do semaforo.
 */
 
-void Semaforo::P(){
+void Semaforo::P(int id){
+  this->tremId = id;
   estruturaOperacao.sem_num = 0; //o grupo é formado por apenas 1 semaforo
   estruturaOperacao.sem_op = -1; //P()
   //Ao finalizar o processo, outros processos que estao pendentes pelo semaforo sao desbloqueados
@@ -49,7 +51,8 @@ Função utilizada para saida na região critica.
 Incrementa o contador do semaforo.
 */
 
-void Semaforo::V(){
+void Semaforo::V(int id){
+  this->tremId = id;
   estruturaOperacao.sem_num = 0; //o grupo é formado por apenas 1 semaforo
   estruturaOperacao.sem_op = 1; //P()
   //Ao finalizar o processo, outros processos que estao pendentes pelo semaforo sao desbloqueados
@@ -64,6 +67,9 @@ int Semaforo::getSemaforoId(){
   return semaforoId;
 }
 
+int Semaforo::getTremId(){
+  return tremId;
+}
 
 /*
   Retornar o atributo privado referente ao contador do semaforo

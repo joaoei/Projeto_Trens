@@ -2,7 +2,7 @@
 #include "ui_mainwindow.h"
 #include "semaforo.h"
 #include "trem.h"
-
+#include <string>
 int REGIAO2_7 = 1;
 int REGIAO2_4 = 1;
 int REGIAO6_7 = 1;
@@ -92,6 +92,151 @@ void MainWindow::updateInterface(int id, int x, int y)
             break;
         default:
             break;
+    }
+    updateSem();
+}
+
+void MainWindow::updateSem() {
+
+    if (sem2_7->getContador() == 0) {
+        ui->v_sem1->setStyleSheet("background-color: red;");
+        if (sem2_7->getTremId() != 0) {
+            std::string s = "Semáforo 1: P() dado por " + std::to_string(sem2_7->getTremId());
+            ui->sem1->setText(s.c_str());
+        }
+    } else {
+        ui->v_sem1->setStyleSheet("background-color: green;");
+        if (sem2_7->getTremId() != 0) {
+            std::string s = "Semáforo 1: V() dado por " + std::to_string(sem2_7->getTremId());
+            ui->sem1->setText(s.c_str());
+        }
+
+    }
+
+    if (sem2_4->getContador() == 0) {
+        ui->v_sem2->setStyleSheet("background-color: red;");
+        if (sem2_4->getTremId() != 0) {
+            std::string s = "Semáforo 2: P() dado por " + std::to_string(sem2_4->getTremId());
+            ui->sem2->setText(s.c_str());
+        }
+    } else {
+        ui->v_sem2->setStyleSheet("background-color: green;");
+        if (sem2_4->getTremId() != 0) {
+            std::string s = "Semáforo 2: V() dado por " + std::to_string(sem2_4->getTremId());
+            ui->sem2->setText(s.c_str());
+        }
+    }
+
+    if (sem5_6->getContador() == 0) {
+        ui->v_sem3->setStyleSheet("background-color: red;");
+        if (sem5_6->getTremId() != 0) {
+            std::string s = "Semáforo 3: P() dado por " + std::to_string(sem5_6->getTremId());
+            ui->sem3->setText(s.c_str());
+        }
+    } else {
+        ui->v_sem3->setStyleSheet("background-color: green;");
+        if (sem5_6->getTremId() != 0) {
+            std::string s = "Semáforo 3: V() dado por " + std::to_string(sem5_6->getTremId());
+            ui->sem3->setText(s.c_str());
+        }
+    }
+
+    if (sem5_3->getContador() == 0) {
+        ui->v_sem4->setStyleSheet("background-color: red;");
+        if (sem5_3->getTremId() != 0) {
+            std::string s = "Semáforo 4: P() dado por " + std::to_string(sem5_3->getTremId());
+            ui->sem4->setText(s.c_str());
+        }
+    } else {
+        ui->v_sem4->setStyleSheet("background-color: green;");
+        if (sem5_3->getTremId() != 0) {
+            std::string s = "Semáforo 4: V() dado por " + std::to_string(sem5_3->getTremId());
+            ui->sem4->setText(s.c_str());
+        }
+    }
+
+    if (sem1_3->getContador() == 0) {
+        ui->v_sem5->setStyleSheet("background-color: red;");
+        if (sem1_3->getTremId() != 0) {
+            std::string s = "Semáforo 5: P() dado por " + std::to_string(sem1_3->getTremId());
+            ui->sem5->setText(s.c_str());
+        }
+    } else {
+        ui->v_sem5->setStyleSheet("background-color: green;");
+        if (sem1_3->getTremId() != 0) {
+            std::string s = "Semáforo 5: V() dado por " + std::to_string(sem1_3->getTremId());
+            ui->sem5->setText(s.c_str());
+        }
+    }
+
+    if (sem4_3->getContador() == 0) {
+        ui->v_sem6->setStyleSheet("background-color: red;");
+        if (sem4_3->getTremId() != 0) {
+            std::string s = "Semáforo 6: P() dado por " + std::to_string(sem4_3->getTremId());
+            ui->sem6->setText(s.c_str());
+        }
+    } else {
+        ui->v_sem6->setStyleSheet("background-color: green;");
+        if (sem4_3->getTremId() != 0) {
+            std::string s = "Semáforo 5: V() dado por " + std::to_string(sem4_3->getTremId());
+            ui->sem6->setText(s.c_str());
+        }
+    }
+
+    if (sem1_4->getContador() == 0) {
+        ui->v_sem7->setStyleSheet("background-color: red;");
+        if (sem1_4->getTremId() != 0) {
+            std::string s = "Semáforo 7: P() dado por " + std::to_string(sem1_4->getTremId());
+            ui->sem7->setText(s.c_str());
+        }
+    } else {
+        ui->v_sem7->setStyleSheet("background-color: green;");
+        if (sem1_4->getTremId() != 0) {
+            std::string s = "Semáforo 7: V() dado por " + std::to_string(sem1_4->getTremId());
+            ui->sem7->setText(s.c_str());
+        }
+    }
+
+    if (sem7_1->getContador() == 0) {
+        ui->v_sem8->setStyleSheet("background-color: red;");
+        if (sem7_1->getTremId() != 0) {
+            std::string s = "Semáforo 7: P() dado por " + std::to_string(sem7_1->getTremId());
+            ui->sem8->setText(s.c_str());
+        }
+    } else {
+        ui->v_sem8->setStyleSheet("background-color: green;");
+        if (sem7_1->getTremId() != 0) {
+            std::string s = "Semáforo 7: V() dado por " + std::to_string(sem7_1->getTremId());
+            ui->sem8->setText(s.c_str());
+        }
+    }
+
+    if (sem1_6->getContador() == 0) {
+        ui->v_sem9->setStyleSheet("background-color: red;");
+        if (sem1_6->getTremId() != 0) {
+            std::string s = "Semáforo 9: P() dado por " + std::to_string(sem1_6->getTremId());
+            ui->sem9->setText(s.c_str());
+        }
+    } else {
+        ui->v_sem9->setStyleSheet("background-color: green;");
+        if (sem1_6->getTremId() != 0) {
+            std::string s = "Semáforo 9: V() dado por " + std::to_string(sem1_6->getTremId());
+            ui->sem9->setText(s.c_str());
+        }
+    }
+
+    if (sem7_6->getContador() == 0) {
+        ui->v_sem10->setStyleSheet("background-color: red;");
+        if (sem7_6->getTremId() != 0) {
+            std::string s = "Semáforo 10: P() dado por " + std::to_string(sem7_6->getTremId());
+            ui->sem10->setText(s.c_str());
+        }
+    } else {
+        ui->v_sem10->setStyleSheet("background-color: green;");
+        if (sem7_6->getTremId() != 0) {
+            std::string s = "Semáforo 10: V() dado por " + std::to_string(sem7_6->getTremId());
+            ui->sem10->setText(s.c_str());
+        }
     }
 }
 

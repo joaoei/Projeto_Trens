@@ -11,14 +11,16 @@ public:
   //chave, valor inicial, flags
   Semaforo(key_t,int,int);
   ~Semaforo();
-  void P();
-  void V();
+  void P(int);
+  void V(int);
   int getSemaforoId();
+  int getTremId();
   int getContador();
 
 private:
   union semun{int val;} arg;
   int semaforoId;
+  int tremId;
   struct sembuf estruturaOperacao;
 
 };
